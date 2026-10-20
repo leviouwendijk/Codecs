@@ -1,5 +1,5 @@
 #include "codecs-lame-bridge.h"
-#include <lame/lame.h>
+#include <lame.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <limits.h>

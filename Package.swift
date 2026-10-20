@@ -12,7 +12,7 @@ let package = Package(
         .executable(name: "codecstest", targets: ["CodecsTestFlows"]),
     ],
     dependencies: [
-        .package(path: "../Media"),
+        .package(url: "https://github.com/leviouwendijk/Media.git", branch: "master"),
         .package(url: "https://github.com/leviouwendijk/Arguments.git", branch: "master"),
         .package(url: "https://github.com/leviouwendijk/TestFlows.git", branch: "master"),
     ],

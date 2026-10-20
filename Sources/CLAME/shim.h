@@ -1,1 +1,1 @@
-#include <lame/lame.h>
+#include <lame.h>

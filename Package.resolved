@@ -1,5 +1,5 @@
 {
-  "originHash" : "7038a3bfefe6a800e335aeeff86be0f5f1497b00d0f6915cf7f74a72f8b70559",
+  "originHash" : "5af3e11705228f185e3538ffea5a135a4cdf7d1f47cf4c9fc8c007e3e49925d0",
   "pins" : [
     {
       "identity" : "ansi",
@@ -80,6 +80,15 @@
       "state" : {
         "branch" : "master",
         "revision" : "5e88720439dc8f782034b6f9f8374c61ef1707f0"
+      }
+    },
+    {
+      "identity" : "media",
+      "kind" : "remoteSourceControl",
+      "location" : "https://github.com/leviouwendijk/Media.git",
+      "state" : {
+        "branch" : "master",
+        "revision" : "fa2c6b99d72c269ccc8630fbdb12c20fa7989f3b"
       }
     },
     {
