@@ -5,5 +5,6 @@ enum CodecsFlowSuite: TestFlowRegistry {
     static let flows: [TestFlow] = [
         lameFlow,
         syntheticRoundtripFlow,
+        cbr320Flow,
     ]
 }

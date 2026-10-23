@@ -88,7 +88,7 @@
       "location" : "https://github.com/leviouwendijk/Media.git",
       "state" : {
         "branch" : "master",
-        "revision" : "fa2c6b99d72c269ccc8630fbdb12c20fa7989f3b"
+        "revision" : "4bb60c5b012b4971ad6c6b70fb2287f88101866a"
       }
     },
     {
@@ -133,7 +133,7 @@
       "location" : "https://github.com/leviouwendijk/Primitives.git",
       "state" : {
         "branch" : "master",
-        "revision" : "7f1da40806dd20e07be0635bf7a2bff461e54b2a"
+        "revision" : "d9a6c6822a3bd030979451f31835db3f3cd67fa2"
       }
     },
     {
@@ -151,7 +151,7 @@
       "location" : "https://github.com/leviouwendijk/Schema.git",
       "state" : {
         "branch" : "master",
-        "revision" : "6b8f45a73ab92ce083c4848bb520db6d99866a06"
+        "revision" : "324a66baf1feaa93a3b4120727e037bb8d124cb4"
       }
     },
     {

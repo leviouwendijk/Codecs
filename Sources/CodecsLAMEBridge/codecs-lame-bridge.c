@@ -18,24 +18,42 @@ void codecs_lame_destroy(codecs_lame_handle *handle) {
     free(handle);
 }
 
-codecs_lame_handle *codecs_lame_open(const char *path, int sample_rate, int channels, int vbr_quality) {
-    if (!path || sample_rate <= 0 || (channels != 1 && channels != 2) || vbr_quality < 0 || vbr_quality > 9) return NULL;
+static codecs_lame_handle *codecs_lame_open_configured(
+    const char *path, int sample_rate, int channels, int value, int use_cbr
+) {
+    if (!path || sample_rate <= 0 || (channels != 1 && channels != 2)) return NULL;
     codecs_lame_handle *handle = calloc(1, sizeof(*handle));
     if (!handle) return NULL;
     handle->encoder = lame_init();
     if (!handle->encoder) { codecs_lame_destroy(handle); return NULL; }
     handle->channels = channels;
+    int encoding_status;
+    if (use_cbr) {
+        encoding_status = lame_set_VBR(handle->encoder, vbr_off) < 0
+            || lame_set_brate(handle->encoder, value) < 0;
+    } else {
+        encoding_status = lame_set_VBR(handle->encoder, vbr_mtrh) < 0
+            || lame_set_VBR_q(handle->encoder, value) < 0;
+    }
     if (lame_set_num_channels(handle->encoder, channels) < 0 ||
         lame_set_in_samplerate(handle->encoder, sample_rate) < 0 ||
-        lame_set_VBR(handle->encoder, vbr_mtrh) < 0 ||
-        lame_set_VBR_q(handle->encoder, vbr_quality) < 0 ||
-        lame_init_params(handle->encoder) < 0) {
+        encoding_status || lame_init_params(handle->encoder) < 0) {
         codecs_lame_destroy(handle);
         return NULL;
     }
     handle->file = fopen(path, "wb+");
     if (!handle->file) { codecs_lame_destroy(handle); return NULL; }
     return handle;
+}
+
+codecs_lame_handle *codecs_lame_open(const char *path, int sample_rate, int channels, int vbr_quality) {
+    if (vbr_quality < 0 || vbr_quality > 9) return NULL;
+    return codecs_lame_open_configured(path, sample_rate, channels, vbr_quality, 0);
+}
+
+codecs_lame_handle *codecs_lame_open_cbr(const char *path, int sample_rate, int channels, int bitrate_kbps) {
+    if (bitrate_kbps != 320) return NULL;
+    return codecs_lame_open_configured(path, sample_rate, channels, bitrate_kbps, 1);
 }
 
 int codecs_lame_append(codecs_lame_handle *handle, const float *interleaved, int frames) {

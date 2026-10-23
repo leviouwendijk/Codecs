@@ -3,12 +3,12 @@
   "failed_names" : [
 
   ],
-  "generated_at" : "2026-10-23T13:27:40Z",
-  "passed" : 2,
+  "generated_at" : "2026-10-23T15:30:04Z",
+  "passed" : 3,
   "results" : [
     {
       "display_name" : "audio-codec",
-      "duration_seconds" : 0.5527269840240479,
+      "duration_seconds" : 0.35196101665496826,
       "name" : "audio-codec",
       "status" : "passed",
       "tags" : [
@@ -19,7 +19,7 @@
     },
     {
       "display_name" : "synthetic-audio-roundtrip",
-      "duration_seconds" : 4.088918924331665,
+      "duration_seconds" : 4.233431100845337,
       "name" : "synthetic-audio-roundtrip",
       "status" : "passed",
       "tags" : [
@@ -29,9 +29,21 @@
         "roundtrip",
         "wav"
       ]
+    },
+    {
+      "display_name" : "cbr-320-mp3",
+      "duration_seconds" : 0.2043459415435791,
+      "name" : "cbr-320-mp3",
+      "status" : "passed",
+      "tags" : [
+        "audio",
+        "bitrate",
+        "cbr",
+        "mp3"
+      ]
     }
   ],
   "skipped" : 0,
   "title" : "Codecs",
-  "total" : 2
+  "total" : 3
 }

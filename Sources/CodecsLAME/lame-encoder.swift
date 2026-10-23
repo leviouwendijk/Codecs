@@ -9,13 +9,36 @@ public enum LAMEVBRQuality: Int, Sendable, CaseIterable, Codable {
     case balanced = 4
 }
 
+public enum LAMECBRBitrate: Int, Sendable, Codable, Hashable {
+    case kbps320 = 320
+}
+
+public enum LAMEEncodingMode: Sendable, Codable, Hashable {
+    case variable(LAMEVBRQuality)
+    case constant(LAMECBRBitrate)
+}
+
 public struct LAMEEncoder: MediaAudioEncoder {
-    public let quality: LAMEVBRQuality
-    public var name: String { "LAME VBR \(quality.rawValue)" }
+    public let mode: LAMEEncodingMode
+
+    public var quality: LAMEVBRQuality? {
+        if case .variable(let value) = mode { return value }
+        return nil
+    }
+    public var name: String {
+        switch mode {
+        case .variable(let quality): return "LAME VBR \(quality.rawValue)"
+        case .constant(let bitrate): return "LAME CBR \(bitrate.rawValue) kbps"
+        }
+    }
     public var fileExtension: String { "mp3" }
 
     public init(quality: LAMEVBRQuality = .maximum) {
-        self.quality = quality
+        self.mode = .variable(quality)
+    }
+
+    public init(bitrate: LAMECBRBitrate) {
+        self.mode = .constant(bitrate)
     }
 
     public func makeSink(at url: URL, sampleRate: Int, channelCount: Int) throws -> any MediaAudioEncodingSink {
@@ -24,7 +47,7 @@ public struct LAMEEncoder: MediaAudioEncoder {
             throw MediaAudioTranscodeError.unsupportedBuffer
         }
         return try LAMEOutput(url: url, sampleRate: sampleRate,
-                                   channelCount: channelCount, quality: quality)
+                              channelCount: channelCount, mode: mode)
     }
 }
 
@@ -35,10 +58,15 @@ private final class LAMEOutput: MediaAudioEncodingSink, @unchecked Sendable {
     private let channelCount: Int
     private var finished = false
 
-    init(url: URL, sampleRate: Int, channelCount: Int, quality: LAMEVBRQuality) throws {
-        guard let opened = url.withUnsafeFileSystemRepresentation({ path in
-            guard let path else { return Optional<OpaquePointer>.none }
-            return codecs_lame_open(path, Int32(sampleRate), Int32(channelCount), Int32(quality.rawValue))
+    init(url: URL, sampleRate: Int, channelCount: Int, mode: LAMEEncodingMode) throws {
+        guard let opened = url.withUnsafeFileSystemRepresentation({ path -> OpaquePointer? in
+            guard let path else { return nil }
+            switch mode {
+            case .variable(let quality):
+                return codecs_lame_open(path, Int32(sampleRate), Int32(channelCount), Int32(quality.rawValue))
+            case .constant(let bitrate):
+                return codecs_lame_open_cbr(path, Int32(sampleRate), Int32(channelCount), Int32(bitrate.rawValue))
+            }
         }) else {
             throw MediaAudioTranscodeError.backendFailure(-1)
         }

@@ -7,6 +7,7 @@ extern "C" {
 
 typedef struct codecs_lame_handle codecs_lame_handle;
 codecs_lame_handle *codecs_lame_open(const char *path, int sample_rate, int channels, int vbr_quality);
+codecs_lame_handle *codecs_lame_open_cbr(const char *path, int sample_rate, int channels, int bitrate_kbps);
 int codecs_lame_append(codecs_lame_handle *handle, const float *interleaved, int frames);
 int codecs_lame_finish(codecs_lame_handle *handle);
 void codecs_lame_destroy(codecs_lame_handle *handle);
