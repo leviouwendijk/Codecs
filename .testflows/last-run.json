@@ -3,12 +3,12 @@
   "failed_names" : [
 
   ],
-  "generated_at" : "2026-10-20T16:12:23Z",
-  "passed" : 1,
+  "generated_at" : "2026-10-23T13:27:40Z",
+  "passed" : 2,
   "results" : [
     {
       "display_name" : "audio-codec",
-      "duration_seconds" : 0.510727047920227,
+      "duration_seconds" : 0.5527269840240479,
       "name" : "audio-codec",
       "status" : "passed",
       "tags" : [
@@ -16,9 +16,22 @@
         "codec",
         "mp3"
       ]
+    },
+    {
+      "display_name" : "synthetic-audio-roundtrip",
+      "duration_seconds" : 4.088918924331665,
+      "name" : "synthetic-audio-roundtrip",
+      "status" : "passed",
+      "tags" : [
+        "audio",
+        "mp3",
+        "pcm",
+        "roundtrip",
+        "wav"
+      ]
     }
   ],
   "skipped" : 0,
   "title" : "Codecs",
-  "total" : 1
+  "total" : 2
 }
